@@ -3,6 +3,7 @@ const readEnvString = (value: unknown): string | undefined =>
 
 export const workflowId = (() => {
   const id = readEnvString(import.meta.env.VITE_CHATKIT_WORKFLOW_ID);
+  console.log(id)
   if (!id || id.startsWith("wf_replace")) {
     throw new Error("Set VITE_CHATKIT_WORKFLOW_ID in your .env file.");
   }
@@ -11,7 +12,7 @@ export const workflowId = (() => {
 
 export function createClientSecretFetcher(
   workflow: string,
-  endpoint = "/api/create-session"
+  endpoint = `${import.meta.env.VITE_API_URL}/api/create-session`,
 ) {
   return async (currentSecret: string | null) => {
     if (currentSecret) return currentSecret;
